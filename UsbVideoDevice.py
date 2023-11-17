@@ -31,15 +31,13 @@ class UsbVideoDevice():
 
         # ポート番号取得
         for line in by_path.split('\n'):
-            if('usb-0' in line):
-                tmp = self.__split(line, '0-usb-0:1.')
-                tmp = self.__split(tmp[1], ':')
-                port = int(tmp[0])
-                tmp = self.__split(tmp[1], '../../video')
-                deviceId = int(tmp[1])
-                if deviceId % 2 == 0:
-                    name = deviceNames[str(deviceId)]
-                    self.__deviceList.append((deviceId , port, name))
+            match = re.search(r'usb-\d+:\d+\.(\d+)', line)
+            if match:
+                port = int(match.group(1))
+                deviceId = re.search(r'../../video(\d+)', line).group(1)
+                if int(deviceId) % 2 == 0:
+                    name = deviceNames[deviceId]
+                    self.__deviceList.append((int(deviceId), port, name))
 
     def __split(self, str, val):
         tmp = str.split(val)
