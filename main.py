@@ -2,7 +2,7 @@ import cv2
 from UsbVideoDevice import UsbVideoDevice
 
 class DynamicCamControl:
-    CAMERA_DEVICE_PORT = 1
+    CAMERA_DEVICE_PORT = 4
 
     def __init__(self, usbVideoDevice: UsbVideoDevice):
         self.cap = None
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     maxPort = usbVideoDevice.getMaxPort()
     print("\nポート番号とデバイスIDの一覧")
     for port in range(maxPort):
-        deviceId = usbVideoDevice.getId(port + 1)
+        deviceId = usbVideoDevice.getVideoId(port + 1)
         if (deviceId != -1):
             print("PORT:{} /dev/video{}".format(port + 1, deviceId))
 
