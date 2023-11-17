@@ -1,4 +1,6 @@
 import subprocess
+import re
+
 
 class UsbVideoDevice():
     def __init__(self):
